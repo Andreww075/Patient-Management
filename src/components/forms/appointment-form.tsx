@@ -92,7 +92,6 @@ const AppointmentForm = ({
         const appointmentToUpdate = {
           userId,
           appointmentId: appointment?.$id!,
-          timeZone: 'Date',
           appointment: {
             primaryPhysician: values.primaryPhysician,
             schedule: new Date(values.schedule),
