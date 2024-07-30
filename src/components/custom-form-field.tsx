@@ -69,21 +69,6 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
         </div>
       );
 
-    case FormFieldType.PHONE_INPUT:
-      return (
-        <FormControl>
-          <PhoneInput
-            defaultCountry="US"
-            placeholder={props.placeholder}
-            international
-            withCountryCallingCode
-            value={field.value as E164Number}
-            onChange={field.onChange}
-            className="input-phone text-gray-300"
-          />
-        </FormControl>
-      );
-
     case FormFieldType.TEXTAREA:
       return (
         <FormControl>
@@ -97,6 +82,21 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
       );
 
     case FormFieldType.PHONE_INPUT:
+      return (
+        <FormControl>
+          <PhoneInput
+            defaultCountry="US"
+            placeholder={props.placeholder}
+            international
+            withCountryCallingCode
+            value={field.value as E164Number | undefined}
+            onChange={field.onChange}
+            className="input-phone"
+          />
+        </FormControl>
+      );
+
+    case FormFieldType.CHECKBOX:
       return (
         <FormControl>
           <div className="flex items-center gap-4">
@@ -126,6 +126,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
             <ReactDatePicker
               showTimeSelect={props.showTimeSelect ?? false}
               selected={field.value}
+              
               timeInputLabel="Time:"
               dateFormat={props.dateFormat ?? "MM/dd/yyyy"}
               wrapperClassName="date-picker"
@@ -149,10 +150,8 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
           </Select>
         </FormControl>
       );
-
     case FormFieldType.SKELETON:
       return props.renderSkeleton ? props.renderSkeleton(field) : null;
-
     default:
       return null;
   }

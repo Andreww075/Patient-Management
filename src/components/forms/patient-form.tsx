@@ -10,6 +10,8 @@ import SubmitButton from "../submit-button";
 import "react-phone-number-input/style.css";
 import React, { useState } from "react";
 import { UserFormValidation } from "@/lib/validation";
+import { createUser } from "@/lib/actions/patient.actions";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -18,6 +20,7 @@ const formSchema = z.object({
 });
 
 const PatientForm = () => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof UserFormValidation>>({
@@ -30,6 +33,7 @@ const PatientForm = () => {
   });
 
   async function onSubmit(values: z.infer<typeof UserFormValidation>) {
+    console.log('ok')
     setIsLoading(true);
 
     try {
@@ -38,8 +42,14 @@ const PatientForm = () => {
         email: values.email,
         phone: values.phone,
       };
+
+      const newUser = await createUser(user);
+
+      if (newUser) {
+        router.push(`/patients/${newUser.$id}/register`);
+      }
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
 
     setIsLoading(false);
@@ -49,18 +59,18 @@ const PatientForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6">
         <section className="mb-12 space-y-4">
-          <h1 className="header text-gray-300">Hi there 👋</h1>
+          <h1 className="header">Hi there 👋</h1>
           <p className="text-dark-700">Get started with appointments.</p>
         </section>
 
         <CustomFormField
           fieldType={FormFieldType.INPUT}
-          name="Name"
-          label="Full Name"
-          placeholder="Nicolas Gomez"
+          control={form.control}
+          name="name"
+          label="Full name"
+          placeholder="Nicolas Ali"
           iconSrc="/assets/icons/user.svg"
           iconAlt="user"
-          control={form.control}
         />
 
         <CustomFormField
@@ -68,7 +78,7 @@ const PatientForm = () => {
           control={form.control}
           name="email"
           label="Email"
-          placeholder="nicoandres@gmail.com"
+          placeholder="nicolasali@gmail.com"
           iconSrc="/assets/icons/email.svg"
           iconAlt="email"
         />
