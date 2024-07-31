@@ -65,7 +65,7 @@ const PasskeyModal = () => {
       <AlertDialogContent className="shad-alert-dialog text-gray-300">
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-start justify-between">
-            Admin Access Verification
+            Admin Access Verification -- (key ↪ 123456 this is a test app)
             <Image
               src="/assets/icons/close.svg"
               alt="close"
