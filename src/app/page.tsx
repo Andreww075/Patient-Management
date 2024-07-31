@@ -7,7 +7,7 @@ export default function Home({ searchParams }: SearchParamProps) {
   const isAdmin = searchParams?.admin === "true";
 
   return (
-    <div className="flex h-screen max-h-screen">
+    <div className="flex h-screen max-h-screen text-gray-300">
       {isAdmin && <PasskeyModal />}
 
       <section className="remove-scrollbar container my-auto">
@@ -38,7 +38,7 @@ export default function Home({ searchParams }: SearchParamProps) {
         height={1000}
         width={1000}
         alt="patient"
-        className="side-img max-w-[50%]"
+        className="side-img max-w-[50%] rounded-tl-3xl rounded-bl-3xl"
       />
     </div>
   );
